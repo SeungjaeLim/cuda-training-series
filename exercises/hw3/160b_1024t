@@ -1,0 +1,35 @@
+vadd(const float *, const float *, float *, int) (160, 1, 1)x(1024, 1, 1), Context 1, Stream 7, Device 0, CC 8.0
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ------------- ------------
+    Metric Name               Metric Unit Metric Value
+    ----------------------- ------------- ------------
+    DRAM Frequency          cycle/nsecond         1.21
+    SM Frequency            cycle/usecond       759.69
+    Elapsed Cycles                  cycle       266883
+    Memory Throughput                   %        72.38
+    DRAM Throughput                     %        72.38
+    Duration                      usecond       351.30
+    L1/TEX Cache Throughput             %        22.42
+    L2 Cache Throughput                 %        81.32
+    SM Active Cycles                cycle    249183.59
+    Compute (SM) Throughput             %        10.97
+    ----------------------- ------------- ------------
+
+    OPT   Memory is more heavily utilized than Compute: Look at the Memory Workload Analysis section to identify the    
+          DRAM bottleneck. Check memory replay (coalescing) metrics to make sure you're efficiently utilizing the       
+          bytes transferred. Also consider whether it is possible to do more work per memory access (kernel fusion) or  
+          whether there are values you can (re)compute.                                                                 
+
+    Section: Memory Workload Analysis
+    --------------------------- ------------ ------------
+    Metric Name                  Metric Unit Metric Value
+    --------------------------- ------------ ------------
+    Memory Throughput           Tbyte/second         1.12
+    Mem Busy                               %        43.98
+    Max Bandwidth                          %        72.38
+    L1/TEX Hit Rate                        %            0
+    L2 Compression Success Rate            %            0
+    L2 Compression Ratio                                0
+    L2 Hit Rate                            %        49.39
+    Mem Pipes Busy                         %        10.93
+    --------------------------- ------------ ------------
