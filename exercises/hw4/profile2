@@ -1,0 +1,17 @@
+row_sums(const float *, float *, unsigned long) (64, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.0
+    Section: Command line profiler metrics
+    ----------------------------------------------- ----------- ------------
+    Metric Name                                     Metric Unit Metric Value
+    ----------------------------------------------- ----------- ------------
+    l1tex__t_requests_pipe_lsu_mem_global_op_ld.sum     request      8388608
+    l1tex__t_sectors_pipe_lsu_mem_global_op_ld.sum       sector    268435456
+    ----------------------------------------------- ----------- ------------
+
+column_sums(const float *, float *, unsigned long) (64, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.0
+    Section: Command line profiler metrics
+    ----------------------------------------------- ----------- ------------
+    Metric Name                                     Metric Unit Metric Value
+    ----------------------------------------------- ----------- ------------
+    l1tex__t_requests_pipe_lsu_mem_global_op_ld.sum     request      8388608
+    l1tex__t_sectors_pipe_lsu_mem_global_op_ld.sum       sector     33554432
+    ----------------------------------------------- ----------- ------------
