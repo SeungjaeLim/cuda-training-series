@@ -64,7 +64,7 @@ row_sums(const float *, float *, unsigned long) (64, 1, 1)x(256, 1, 1), Context 
           (https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#occupancy) for more details on           
           optimizing occupancy.                                                                                         
 
-  column_sums(const float *, float *, unsigned long) (64, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.0
+column_sums(const float *, float *, unsigned long) (64, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.0
     Section: GPU Speed Of Light Throughput
     ----------------------- ------------- ------------
     Metric Name               Metric Unit Metric Value
