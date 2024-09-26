@@ -1,0 +1,209 @@
+  atomic_red(const float *, float *) (640, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.6
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ------------- ------------
+    Metric Name               Metric Unit Metric Value
+    ----------------------- ------------- ------------
+    DRAM Frequency          cycle/nsecond         9.48
+    SM Frequency            cycle/nsecond         1.39
+    Elapsed Cycles                  cycle       505547
+    Memory Throughput                   %         1.38
+    DRAM Throughput                     %         0.20
+    Duration                      usecond       362.72
+    L1/TEX Cache Throughput             %         0.81
+    L2 Cache Throughput                 %         1.38
+    SM Active Cycles                cycle    459826.06
+    Compute (SM) Throughput             %         0.40
+    ----------------------- ------------- ------------
+
+    OPT   This kernel exhibits low compute throughput and memory bandwidth utilization relative to the peak performance 
+          of this device. Achieved compute throughput and/or memory bandwidth below 60.0% of peak typically indicate    
+          latency issues. Look at Scheduler Statistics and Warp State Statistics for potential reasons.                 
+
+    Section: Launch Statistics
+    -------------------------------- --------------- ---------------
+    Metric Name                          Metric Unit    Metric Value
+    -------------------------------- --------------- ---------------
+    Block Size                                                   256
+    Function Cache Configuration                     CachePreferNone
+    Grid Size                                                    640
+    Registers Per Thread             register/thread              16
+    Shared Memory Configuration Size           Kbyte            8.19
+    Driver Shared Memory Per Block       Kbyte/block            1.02
+    Dynamic Shared Memory Per Block       byte/block               0
+    Static Shared Memory Per Block        byte/block               0
+    Threads                                   thread          163840
+    Waves Per SM                                                1.30
+    -------------------------------- --------------- ---------------
+
+    OPT   Estimated Speedup: 50%                                                                                        
+          A wave of thread blocks is defined as the maximum number of blocks that can be executed in parallel on the    
+          target GPU. The number of blocks in a wave depends on the number of multiprocessors and the theoretical       
+          occupancy of the kernel. This kernel launch results in 1 full waves and a partial wave of 148 thread blocks.  
+          Under the assumption of a uniform execution duration of all thread blocks, the partial wave may account for   
+          up to 50.0% of the total kernel runtime with a lower occupancy of 42.1%. Try launching a grid with no         
+          partial wave. The overall impact of this tail effect also lessens with the number of full waves executed for  
+          a grid. See the Hardware Model                                                                                
+          (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#metrics-hw-model) description for more      
+          details on launch configurations.                                                                             
+
+    Section: Occupancy
+    ------------------------------- ----------- ------------
+    Metric Name                     Metric Unit Metric Value
+    ------------------------------- ----------- ------------
+    Block Limit SM                        block           16
+    Block Limit Registers                 block           16
+    Block Limit Shared Mem                block            8
+    Block Limit Warps                     block            6
+    Theoretical Active Warps per SM        warp           48
+    Theoretical Occupancy                     %          100
+    Achieved Occupancy                        %        57.95
+    Achieved Active Warps Per SM           warp        27.81
+    ------------------------------- ----------- ------------
+
+    OPT   Estimated Speedup: 42.05%                                                                                     
+          This kernel's theoretical occupancy is not impacted by any block limit. The difference between calculated     
+          theoretical (100.0%) and measured achieved occupancy (57.9%) can be the result of warp scheduling overheads   
+          or workload imbalances during the kernel execution. Load imbalances can occur between warps within a block    
+          as well as across blocks of the same kernel. See the CUDA Best Practices Guide                                
+          (https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#occupancy) for more details on           
+          optimizing occupancy.                                                                                         
+
+  reduce_a(float *, float *) (640, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.6
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ------------- ------------
+    Metric Name               Metric Unit Metric Value
+    ----------------------- ------------- ------------
+    DRAM Frequency          cycle/nsecond         9.07
+    SM Frequency            cycle/nsecond         1.33
+    Elapsed Cycles                  cycle         8250
+    Memory Throughput                   %        42.82
+    DRAM Throughput                     %        12.13
+    Duration                      usecond         6.21
+    L1/TEX Cache Throughput             %        62.25
+    L2 Cache Throughput                 %         6.01
+    SM Active Cycles                cycle      5666.98
+    Compute (SM) Throughput             %        42.82
+    ----------------------- ------------- ------------
+
+    OPT   This kernel exhibits low compute throughput and memory bandwidth utilization relative to the peak performance 
+          of this device. Achieved compute throughput and/or memory bandwidth below 60.0% of peak typically indicate    
+          latency issues. Look at Scheduler Statistics and Warp State Statistics for potential reasons.                 
+
+    Section: Launch Statistics
+    -------------------------------- --------------- ---------------
+    Metric Name                          Metric Unit    Metric Value
+    -------------------------------- --------------- ---------------
+    Block Size                                                   256
+    Function Cache Configuration                     CachePreferNone
+    Grid Size                                                    640
+    Registers Per Thread             register/thread              16
+    Shared Memory Configuration Size           Kbyte           16.38
+    Driver Shared Memory Per Block       Kbyte/block            1.02
+    Dynamic Shared Memory Per Block       byte/block               0
+    Static Shared Memory Per Block       Kbyte/block            1.02
+    Threads                                   thread          163840
+    Waves Per SM                                                1.30
+    -------------------------------- --------------- ---------------
+
+    OPT   Estimated Speedup: 50%                                                                                        
+          A wave of thread blocks is defined as the maximum number of blocks that can be executed in parallel on the    
+          target GPU. The number of blocks in a wave depends on the number of multiprocessors and the theoretical       
+          occupancy of the kernel. This kernel launch results in 1 full waves and a partial wave of 148 thread blocks.  
+          Under the assumption of a uniform execution duration of all thread blocks, the partial wave may account for   
+          up to 50.0% of the total kernel runtime with a lower occupancy of 24.2%. Try launching a grid with no         
+          partial wave. The overall impact of this tail effect also lessens with the number of full waves executed for  
+          a grid. See the Hardware Model                                                                                
+          (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#metrics-hw-model) description for more      
+          details on launch configurations.                                                                             
+
+    Section: Occupancy
+    ------------------------------- ----------- ------------
+    Metric Name                     Metric Unit Metric Value
+    ------------------------------- ----------- ------------
+    Block Limit SM                        block           16
+    Block Limit Registers                 block           16
+    Block Limit Shared Mem                block            8
+    Block Limit Warps                     block            6
+    Theoretical Active Warps per SM        warp           48
+    Theoretical Occupancy                     %          100
+    Achieved Occupancy                        %        75.82
+    Achieved Active Warps Per SM           warp        36.40
+    ------------------------------- ----------- ------------
+
+    OPT   Estimated Speedup: 24.18%                                                                                     
+          This kernel's theoretical occupancy is not impacted by any block limit. The difference between calculated     
+          theoretical (100.0%) and measured achieved occupancy (75.8%) can be the result of warp scheduling overheads   
+          or workload imbalances during the kernel execution. Load imbalances can occur between warps within a block    
+          as well as across blocks of the same kernel. See the CUDA Best Practices Guide                                
+          (https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#occupancy) for more details on           
+          optimizing occupancy.                                                                                         
+
+  reduce_ws(float *, float *) (640, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.6
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ------------- ------------
+    Metric Name               Metric Unit Metric Value
+    ----------------------- ------------- ------------
+    DRAM Frequency          cycle/nsecond         9.69
+    SM Frequency            cycle/nsecond         1.41
+    Elapsed Cycles                  cycle         7004
+    Memory Throughput                   %        15.85
+    DRAM Throughput                     %        14.21
+    Duration                      usecond         4.96
+    L1/TEX Cache Throughput             %        28.36
+    L2 Cache Throughput                 %         7.08
+    SM Active Cycles                cycle      3907.77
+    Compute (SM) Throughput             %        17.81
+    ----------------------- ------------- ------------
+
+    OPT   This kernel exhibits low compute throughput and memory bandwidth utilization relative to the peak performance 
+          of this device. Achieved compute throughput and/or memory bandwidth below 60.0% of peak typically indicate    
+          latency issues. Look at Scheduler Statistics and Warp State Statistics for potential reasons.                 
+
+    Section: Launch Statistics
+    -------------------------------- --------------- ---------------
+    Metric Name                          Metric Unit    Metric Value
+    -------------------------------- --------------- ---------------
+    Block Size                                                   256
+    Function Cache Configuration                     CachePreferNone
+    Grid Size                                                    640
+    Registers Per Thread             register/thread              16
+    Shared Memory Configuration Size           Kbyte           16.38
+    Driver Shared Memory Per Block       Kbyte/block            1.02
+    Dynamic Shared Memory Per Block       byte/block               0
+    Static Shared Memory Per Block        byte/block             128
+    Threads                                   thread          163840
+    Waves Per SM                                                1.30
+    -------------------------------- --------------- ---------------
+
+    OPT   Estimated Speedup: 50%                                                                                        
+          A wave of thread blocks is defined as the maximum number of blocks that can be executed in parallel on the    
+          target GPU. The number of blocks in a wave depends on the number of multiprocessors and the theoretical       
+          occupancy of the kernel. This kernel launch results in 1 full waves and a partial wave of 148 thread blocks.  
+          Under the assumption of a uniform execution duration of all thread blocks, the partial wave may account for   
+          up to 50.0% of the total kernel runtime with a lower occupancy of 37.7%. Try launching a grid with no         
+          partial wave. The overall impact of this tail effect also lessens with the number of full waves executed for  
+          a grid. See the Hardware Model                                                                                
+          (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#metrics-hw-model) description for more      
+          details on launch configurations.                                                                             
+
+    Section: Occupancy
+    ------------------------------- ----------- ------------
+    Metric Name                     Metric Unit Metric Value
+    ------------------------------- ----------- ------------
+    Block Limit SM                        block           16
+    Block Limit Registers                 block           16
+    Block Limit Shared Mem                block           14
+    Block Limit Warps                     block            6
+    Theoretical Active Warps per SM        warp           48
+    Theoretical Occupancy                     %          100
+    Achieved Occupancy                        %        62.26
+    Achieved Active Warps Per SM           warp        29.89
+    ------------------------------- ----------- ------------
+
+    OPT   Estimated Speedup: 37.74%                                                                                     
+          This kernel's theoretical occupancy is not impacted by any block limit. The difference between calculated     
+          theoretical (100.0%) and measured achieved occupancy (62.3%) can be the result of warp scheduling overheads   
+          or workload imbalances during the kernel execution. Load imbalances can occur between warps within a block    
+          as well as across blocks of the same kernel. See the CUDA Best Practices Guide                                
+          (https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#occupancy) for more details on           
+          optimizing occupancy.                                                                                         
