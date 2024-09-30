@@ -1,0 +1,77 @@
+Generating '/tmp/nsys-report-0483.qdstrm'
+[ 1/11] [========================100%] report11.nsys-rep
+[ 2/11] [========================100%] report11.sqlite
+[ 3/11] Executing 'nvtx_sum' stats report
+SKIPPED: /workspace/exercises/hw6/report11.sqlite does not contain NV Tools Extension (NVTX) data.
+[ 4/11] Executing 'osrt_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)           Name         
+ --------  ---------------  ---------  -----------  -----------  ---------  ---------  -----------  ----------------------
+     62.7       6742815311        350   19265186.6   10097385.5       3497  100198255   27212391.2  poll                  
+     32.5       3500600581          7  500085797.3  500083999.0  500069441  500109689      13397.5  pthread_cond_timedwait
+      3.3        358031277          2  179015638.5  179015638.5     277893  357753384  252773343.8  sem_wait              
+      1.3        136864544        483     283363.4      13151.0        445   38259739    2476495.7  ioctl                 
+      0.2         19790139         45     439780.9       2117.0       1060   19636207    2926673.0  fopen                 
+      0.0          1598693         27      59210.9       7847.0       3862    1022637     193711.2  mmap64                
+      0.0          1099885          9     122209.4      81450.0      12170     326736      98197.3  sem_timedwait         
+      0.0           553044         44      12569.2      12911.5       3703      19834       4009.1  open64                
+      0.0           509738          2     254869.0     254869.0      20343     489395     331669.8  pthread_mutex_lock    
+      0.0           184058          4      46014.5      48040.5      30267      57710      12354.8  pthread_create        
+      0.0           106726         16       6670.4       1966.5        851      55978      13439.0  mmap                  
+      0.0            38805         49        791.9         45.0         41      36524       5210.9  fgets                 
+      0.0            35683         38        939.0        672.5        466       3189        658.1  fclose                
+      0.0            33265          6       5544.2       4230.5       1564      11686       3905.1  open                  
+      0.0            27600         14       1971.4       1556.5        383       5279       1374.4  read                  
+      0.0            22948          5       4589.6       4466.0       2947       6275       1504.4  munmap                
+      0.0            21705         51        425.6        443.0        176       1298        191.1  fcntl                 
+      0.0            19502         11       1772.9       1445.0        571       3583       1121.6  write                 
+      0.0            16874          2       8437.0       8437.0       5609      11265       3999.4  socket                
+      0.0            11328          1      11328.0      11328.0      11328      11328          0.0  connect               
+      0.0             6584          1       6584.0       6584.0       6584       6584          0.0  pipe2                 
+      0.0             2914          1       2914.0       2914.0       2914       2914          0.0  bind                  
+      0.0             2056          7        293.7        291.0        190        426        101.9  dup                   
+      0.0             1158          1       1158.0       1158.0       1158       1158          0.0  listen                
+
+[ 5/11] Executing 'cuda_api_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)           Name         
+ --------  ---------------  ---------  -----------  -----------  ---------  ---------  -----------  ----------------------
+     87.3       3183565525      10000     318356.6     349670.5       2804   39668866     407992.5  cudaLaunchKernel      
+     10.0        365231073          1  365231073.0  365231073.0  365231073  365231073          0.0  cudaDeviceSynchronize 
+      2.6         93728121          1   93728121.0   93728121.0   93728121   93728121          0.0  cudaMallocManaged     
+      0.2          5694357          2    2847178.5    2847178.5     393794    5300563    3469609.6  cudaMemPrefetchAsync  
+      0.0             1557          1       1557.0       1557.0       1557       1557          0.0  cuModuleGetLoadingMode
+
+[ 6/11] Executing 'cuda_gpu_kern_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)            Name           
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  -------------------------
+    100.0       3497989322      10000  349798.9  349473.0    345729    359553       1808.0  inc(int *, unsigned long)
+
+[ 7/11] Executing 'cuda_gpu_mem_time_sum' stats report
+
+ Time (%)  Total Time (ns)  Count  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)               Operation              
+ --------  ---------------  -----  --------  --------  --------  --------  -----------  ------------------------------------
+     51.2          5401677     64   84401.2   84352.0     84288     84737        111.9  [CUDA memcpy Unified Host-to-Device]
+     48.8          5156782     64   80574.7   80544.0     80416     81344        160.0  [CUDA memcpy Unified Device-to-Host]
+
+[ 8/11] Executing 'cuda_gpu_mem_size_sum' stats report
+
+ Total (MB)  Count  Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)               Operation              
+ ----------  -----  --------  --------  --------  --------  -----------  ------------------------------------
+    134.218     64     2.097     2.097     2.097     2.097        0.000  [CUDA memcpy Unified Device-to-Host]
+    134.218     64     2.097     2.097     2.097     2.097        0.000  [CUDA memcpy Unified Host-to-Device]
+
+[ 9/11] Executing 'um_sum' stats report
+SKIPPED: /workspace/exercises/hw6/report11.sqlite does not contain CUDA Unified Memory GPU page faults data.
+[10/11] Executing 'um_total_sum' stats report
+SKIPPED: /workspace/exercises/hw6/report11.sqlite does not contain CUDA Unified Memory GPU page faults data.
+[11/11] Executing 'um_cpu_page_faults_sum' stats report
+
+ CPU Page Faults  CPU Instruction Address
+ ---------------  -----------------------
+             384  0x7f87663b6c3a         
+
+Generated:
+    /workspace/exercises/hw6/report11.nsys-rep
+    /workspace/exercises/hw6/report11.sqlite

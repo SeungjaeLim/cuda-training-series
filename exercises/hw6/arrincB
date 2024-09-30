@@ -1,0 +1,91 @@
+Generating '/tmp/nsys-report-abaf.qdstrm'
+[ 1/11] [========================100%] report6.nsys-rep
+[ 2/11] [========================100%] report6.sqlite
+[ 3/11] Executing 'nvtx_sum' stats report
+SKIPPED: /workspace/exercises/hw6/report6.sqlite does not contain NV Tools Extension (NVTX) data.
+[ 4/11] Executing 'osrt_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)    Med (ns)   Min (ns)  Max (ns)   StdDev (ns)       Name     
+ --------  ---------------  ---------  ----------  ----------  --------  ---------  -----------  --------------
+     78.7        674200891         44  15322747.5  10066646.5      4127  100148129   24226450.0  poll          
+     20.9        178970582        481    372080.2     12000.0       385  120840085    5611257.5  ioctl         
+      0.2          1657352         27     61383.4      5533.0      3375    1119451     212681.2  mmap64        
+      0.1           586117          9     65124.1     22246.0     11384     335145     105637.3  sem_timedwait 
+      0.1           557127         44     12662.0     13288.0      3310      19488       3889.0  open64        
+      0.0           178722         45      3971.6      2157.0      1072      38022       5966.3  fopen         
+      0.0           148530          3     49510.0     50475.0     42126      55929       6951.9  pthread_create
+      0.0           108203         16      6762.7      1956.0       747      55869      13367.6  mmap          
+      0.0            40090         49       818.2        42.0        40      37925       5411.4  fgets         
+      0.0            30031          6      5005.2      5294.0      1610       7765       2615.6  open          
+      0.0            29300         38       771.1       670.5       466       1487        312.9  fclose        
+      0.0            20218          6      3369.7      3209.0      1882       5110       1168.5  munmap        
+      0.0            17290         51       339.0       316.0       169        828        131.9  fcntl         
+      0.0            16451          2      8225.5      8225.5      4189      12262       5708.5  socket        
+      0.0            16270         10      1627.0      1462.5       794       2915        805.8  write         
+      0.0            15866         13      1220.5       896.0       519       2751        843.3  read          
+      0.0            12761          1     12761.0     12761.0     12761      12761          0.0  connect       
+      0.0             6886          1      6886.0      6886.0      6886       6886          0.0  pipe2         
+      0.0             2462          1      2462.0      2462.0      2462       2462          0.0  bind          
+      0.0             1805          7       257.9       273.0       180        355         74.4  dup           
+      0.0             1189          1      1189.0      1189.0      1189       1189          0.0  listen        
+
+[ 5/11] Executing 'cuda_api_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)    Med (ns)   Min (ns)  Max (ns)  StdDev (ns)           Name         
+ --------  ---------------  ---------  ----------  ----------  --------  --------  -----------  ----------------------
+     53.2         97561524          1  97561524.0  97561524.0  97561524  97561524          0.0  cudaMallocManaged     
+     26.5         48641856          1  48641856.0  48641856.0  48641856  48641856          0.0  cudaDeviceSynchronize 
+     20.2         37054951          1  37054951.0  37054951.0  37054951  37054951          0.0  cudaLaunchKernel      
+      0.0             1746          1      1746.0      1746.0      1746      1746          0.0  cuModuleGetLoadingMode
+
+[ 6/11] Executing 'cuda_gpu_kern_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances   Avg (ns)    Med (ns)   Min (ns)  Max (ns)  StdDev (ns)            Name           
+ --------  ---------------  ---------  ----------  ----------  --------  --------  -----------  -------------------------
+    100.0         48644815          1  48644815.0  48644815.0  48644815  48644815          0.0  inc(int *, unsigned long)
+
+[ 7/11] Executing 'cuda_gpu_mem_time_sum' stats report
+
+ Time (%)  Total Time (ns)  Count  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)               Operation              
+ --------  ---------------  -----  --------  --------  --------  --------  -----------  ------------------------------------
+     66.8         12051632   4428    2721.7    1887.0      1535     37664       3908.6  [CUDA memcpy Unified Host-to-Device]
+     33.2          6000591    768    7813.3    2527.5      1151     40993      11406.7  [CUDA memcpy Unified Device-to-Host]
+
+[ 8/11] Executing 'cuda_gpu_mem_size_sum' stats report
+
+ Total (MB)  Count  Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)               Operation              
+ ----------  -----  --------  --------  --------  --------  -----------  ------------------------------------
+    134.218    768     0.175     0.033     0.004     1.044        0.301  [CUDA memcpy Unified Device-to-Host]
+    134.218   4428     0.030     0.008     0.004     0.918        0.099  [CUDA memcpy Unified Host-to-Device]
+
+[ 9/11] Executing 'um_sum' stats report
+
+ Virtual Address  HtoD Migration size (MB)  DtoH Migration size (MB)  CPU Page Faults   GPU Page Faults  Migration Throughput (MBps)
+ ---------------  ------------------------  ------------------------  ---------------  ----------------  ---------------------------
+ 0x7FAB5DF01000                                                1.044                                                       25801.789
+ 0x7FAB57F01000                                                1.044                                                       25699.430
+ 0x7FAB56101000                                                1.044                                                       25679.585
+ 0x7FAB56701000                                                1.044                                                       25679.585
+ 0x7FAB59D01000                                                1.044                                                       25679.585
+ 0x7FAB5B901000                                                1.044                                                       25679.585
+ 0x7FAB5C101000                                                1.044                                                       25679.585
+ 0x7FAB5CD01000                                                1.044                                                       25679.585
+ 0x7FAB5D101000                                                1.044                                                       25679.585
+ 0x7FAB5D901000                                                1.044                                                       25679.585
+
+[10/11] Executing 'um_total_sum' stats report
+
+ Total HtoD Migration Size (MB)  Total DtoH Migration Size (MB)  Total CPU Page Faults  Total GPU PageFaults  Minimum Virtual Address  Maximum Virtual Address
+ ------------------------------  ------------------------------  ---------------------  --------------------  -----------------------  -----------------------
+                        134.218                         134.218                    768                   340  0x7FAB56000000           0x7FAB5DF40000         
+
+[11/11] Executing 'um_cpu_page_faults_sum' stats report
+
+ CPU Page Faults  CPU Instruction Address
+ ---------------  -----------------------
+             384  0x7fabd9b8bc3a         
+             384  0x55a3ebf6ee3e         
+
+Generated:
+    /workspace/exercises/hw6/report6.nsys-rep
+    /workspace/exercises/hw6/report6.sqlite

@@ -1,0 +1,69 @@
+Generating '/tmp/nsys-report-cf2f.qdstrm'
+[ 1/11] [========================100%] report5.nsys-rep
+[ 2/11] [========================100%] report5.sqlite
+[ 3/11] Executing 'nvtx_sum' stats report
+SKIPPED: /workspace/exercises/hw6/report5.sqlite does not contain NV Tools Extension (NVTX) data.
+[ 4/11] Executing 'osrt_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)   Med (ns)   Min (ns)  Max (ns)   StdDev (ns)       Name     
+ --------  ---------------  ---------  ----------  ---------  --------  ---------  -----------  --------------
+     59.6        200566145         12  16713845.4  1697933.0      7621  100170731   29375476.5  poll          
+     39.3        132287753        479    276174.8    12269.0       386   78546445    3727502.6  ioctl         
+      0.5          1620326         27     60012.1     6833.0      2958    1083561     205733.4  mmap64        
+      0.2           646747          9     71860.8    22316.0     17843     348462     111756.9  sem_timedwait 
+      0.2           555900         44     12634.1    13196.5      3664      20711       4029.6  open64        
+      0.0           151590         45      3368.7     2148.0      1003      18566       3380.4  fopen         
+      0.0           145660          3     48553.3    51474.0     35783      58403      11589.4  pthread_create
+      0.0            99576         15      6638.4     1959.0       823      55982      13857.1  mmap          
+      0.0            39537         49       806.9       43.0        41      37331       5326.4  fgets         
+      0.0            30177          6      5029.5     5310.0      1585       8728       2568.6  open          
+      0.0            29866         38       785.9      646.5       477       1704        347.4  fclose        
+      0.0            22690          6      3781.7     3474.5      2673       5480       1167.9  munmap        
+      0.0            20306         13      1562.0     1136.0       483       4925       1269.8  read          
+      0.0            17959         51       352.1      340.0       169        814        140.5  fcntl         
+      0.0            17473          2      8736.5     8736.5      4935      12538       5376.1  socket        
+      0.0            15667         10      1566.7     1359.5       799       2548        600.2  write         
+      0.0            13226          1     13226.0    13226.0     13226      13226          0.0  connect       
+      0.0             6478          1      6478.0     6478.0      6478       6478          0.0  pipe2         
+      0.0             1926          1      1926.0     1926.0      1926       1926          0.0  bind          
+      0.0             1818          7       259.7      260.0       196        344         65.0  dup           
+      0.0             1038          1      1038.0     1038.0      1038       1038          0.0  listen        
+
+[ 5/11] Executing 'cuda_api_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)    Med (ns)   Min (ns)  Max (ns)  StdDev (ns)           Name         
+ --------  ---------------  ---------  ----------  ----------  --------  --------  -----------  ----------------------
+     51.4         73029223          1  73029223.0  73029223.0  73029223  73029223          0.0  cudaMalloc            
+     25.8         36731486          1  36731486.0  36731486.0  36731486  36731486          0.0  cudaLaunchKernel      
+     22.8         32349041          2  16174520.5  16174520.5  16143323  16205718      44119.9  cudaMemcpy            
+      0.0             1573          1      1573.0      1573.0      1573      1573          0.0  cuModuleGetLoadingMode
+
+[ 6/11] Executing 'cuda_gpu_kern_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)            Name           
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  -------------------------
+    100.0           353377          1  353377.0  353377.0    353377    353377          0.0  inc(int *, unsigned long)
+
+[ 7/11] Executing 'cuda_gpu_mem_time_sum' stats report
+
+ Time (%)  Total Time (ns)  Count   Avg (ns)    Med (ns)   Min (ns)  Max (ns)  StdDev (ns)           Operation          
+ --------  ---------------  -----  ----------  ----------  --------  --------  -----------  ----------------------------
+     50.6         16006192      1  16006192.0  16006192.0  16006192  16006192          0.0  [CUDA memcpy Host-to-Device]
+     49.4         15650063      1  15650063.0  15650063.0  15650063  15650063          0.0  [CUDA memcpy Device-to-Host]
+
+[ 8/11] Executing 'cuda_gpu_mem_size_sum' stats report
+
+ Total (MB)  Count  Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)           Operation          
+ ----------  -----  --------  --------  --------  --------  -----------  ----------------------------
+    134.218      1   134.218   134.218   134.218   134.218        0.000  [CUDA memcpy Device-to-Host]
+    134.218      1   134.218   134.218   134.218   134.218        0.000  [CUDA memcpy Host-to-Device]
+
+[ 9/11] Executing 'um_sum' stats report
+SKIPPED: /workspace/exercises/hw6/report5.sqlite does not contain CUDA Unified Memory CPU page faults data.
+[10/11] Executing 'um_total_sum' stats report
+SKIPPED: /workspace/exercises/hw6/report5.sqlite does not contain CUDA Unified Memory CPU page faults data.
+[11/11] Executing 'um_cpu_page_faults_sum' stats report
+SKIPPED: /workspace/exercises/hw6/report5.sqlite does not contain CUDA Unified Memory CPU page faults data.
+Generated:
+    /workspace/exercises/hw6/report5.nsys-rep
+    /workspace/exercises/hw6/report5.sqlite
