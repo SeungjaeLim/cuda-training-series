@@ -9,7 +9,7 @@ typedef float ft;
 const int chunks = 64;
 const size_t ds = 1024*1024*chunks;
 const int count = 22;
-const int num_gpus = 4;
+const int num_gpus = 2;
 
 // not modifiable
 const float sqrt_2PIf = 2.5066282747946493232942230134974f;
