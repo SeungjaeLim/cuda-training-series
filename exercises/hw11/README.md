@@ -50,3 +50,14 @@ nsys profile --stats=true -t nvtx,cuda -s none -o 4_ranks_no_MPS_N_1e9 -f true m
 ## Experimenting with problem size
 
 Vary the problem size `N` until you've found the minimum size where you can definitively say that MPS provides a clear benefit over the default compute mode case.
+
+| Data Size | Rank | MPS | Time per Kernel (ms) |
+|-----------|------|-----|----------------------|
+| 1e9       | 1    | O   | 2.579                |
+| 1e9       | 1    | X   | 2.577                |
+| 1e9       | 4    | O   | 2.562                |
+| 1e9       | 4    | X   | 2.751                |
+| 1e7       | 1    | O   | 0.284                |
+| 1e7       | 1    | X   | 0.283                |
+| 1e7       | 4    | O   | 0.219                |
+| 1e7       | 4    | X   | 0.522                |
