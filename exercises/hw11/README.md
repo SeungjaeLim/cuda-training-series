@@ -59,5 +59,5 @@ Vary the problem size `N` until you've found the minimum size where you can defi
 | 1e9       | 4    | X   | 2.751                |
 | 1e7       | 1    | O   | 0.284                |
 | 1e7       | 1    | X   | 0.283                |
-| 1e7       | 4    | O   | 0.219                |
+| 1e7       | 4    | O   | **0.219**                |
 | 1e7       | 4    | X   | 0.522                |
