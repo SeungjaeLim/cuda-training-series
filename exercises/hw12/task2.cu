@@ -16,6 +16,7 @@ __global__ void estimate_sum_ahs(size_t length, T *sum){
   __shared__ T smem[BLOCK_SIZE];
   size_t idx = blockDim.x*blockIdx.x+threadIdx.x;
   smem[threadIdx.x] = (idx < length)?ahs(idx):0;
+  if (idx == 0) smem[0] = 0; 
 
   for (int i = blockDim.x>>1; i > 0; i >>= 1){
     __syncthreads();
@@ -37,7 +38,13 @@ int main(int argc, char* argv[]){
   dim3 grid((my_length+block.x-1)/block.x);
   estimate_sum_ahs<<<grid, block>>>(my_length, sum);
   err = cudaDeviceSynchronize();
-  if (err != cudaSuccess) {std::cout << "Error: " << cudaGetErrorString(err) << std::endl; return 0;}
-  std::cout << "Estimated value: " << *sum << " Expected value: "  << log(2)  << std::endl;
-  return 0;
+  double estimated_rounded = std::round(*sum * 100.0) / 100.0;
+    double expected_rounded = std::round(log(2) * 100.0) / 100.0;
+
+    if (estimated_rounded == expected_rounded) {
+        std::cout << "Success!" << std::endl;
+    } else {
+        std::cout << "Estimated value: " << *sum << " Expected value: " << log(2) << std::endl;
+    }
+
 }
