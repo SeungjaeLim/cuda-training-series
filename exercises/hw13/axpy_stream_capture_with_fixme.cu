@@ -5,6 +5,8 @@
 #include <chrono>
 #include <iostream>
 
+using namespace std::chrono;  
+
 // error checking macro
 #define cudaCheckErrors(msg) \
     do { \
@@ -25,171 +27,184 @@ __global__
 void kernel_a(float * x, float * y){
   int idx = blockIdx.x*blockDim.x + threadIdx.x;
   if (idx < N) y[idx] = 2.0*x[idx] + y[idx];
-
 }
 
 __global__
 void kernel_b(float * x, float * y){
   int idx = blockIdx.x*blockDim.x + threadIdx.x;
   if (idx < N) y[idx] = 2.0*x[idx] + y[idx];
-
 }
 
 __global__
 void kernel_c(float * x, float * y){
   int idx = blockIdx.x*blockDim.x + threadIdx.x;
   if (idx < N) y[idx] = 2.0*x[idx] + y[idx];
-
 }
 
 __global__
 void kernel_d(float * x, float * y){
   int idx = blockIdx.x*blockDim.x + threadIdx.x;
   if (idx < N) y[idx] = 2.0*x[idx] + y[idx];
-
 }
 
 int main(){
 
-// Set up and create events
-cudaEvent_t event1;
-cudaEvent_t event2;
+    // Set up and create events
+    cudaEvent_t event1;
+    cudaEvent_t event2;
 
-cudaEventCreateWithFlags(&event1, cudaEventDisableTiming);
-cudaEventCreateWithFlags(&event2, cudaEventDisableTiming);
+    cudaEventCreateWithFlags(&event1, cudaEventDisableTiming);
+    cudaCheckErrors("Event1 creation failed");
+    cudaEventCreateWithFlags(&event2, cudaEventDisableTiming);
+    cudaCheckErrors("Event2 creation failed");
 
-// Set up and create streams
-const int num_streams = 2;
+    // Set up and create streams
+    const int num_streams = 2;
+    cudaStream_t streams[num_streams];
+    for (int i = 0; i < num_streams; ++i){
+        cudaStreamCreateWithFlags(&streams[i], cudaStreamNonBlocking);
+    }
 
-cudaStream_t streams[num_streams];
+    // Set up and initialize host data
+    float* h_x = (float*) malloc(N * sizeof(float));
+    float* h_y = (float*) malloc(N * sizeof(float));
+    float* out_y = (float*) malloc(N * sizeof(float));
+    for (int i = 0; i < N; ++i){
+        h_x[i] = (float)i;
+        h_y[i] = (float)i;
+    }
 
-for (int i = 0; i < num_streams; ++i){
-    cudaStreamCreateWithFlags(&streams[i], cudaStreamNonBlocking);
-}
+    // Set up device data
+    float* d_x;
+    float* d_y;
+    cudaMalloc((void**) &d_x, N * sizeof(float));
+    cudaMalloc((void**) &d_y, N * sizeof(float));
+    cudaCheckErrors("cudaMalloc failed");
+    cudaMemcpy(d_x, h_x, N * sizeof(float), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_y, h_y, N * sizeof(float), cudaMemcpyHostToDevice);
+    cudaCheckErrors("Memcpy to device failed");
 
-// Set up and initialize host data
-float* h_x;
-float* h_y;
+    // Graph execution setup
+    bool graphCreated = false;
+    cudaGraph_t graph;
+    cudaGraphExec_t instance;
+    int threads = 512;
+    int blocks = (N + (threads - 1)) / threads;
 
-h_x = (float*) malloc(N * sizeof(float));
-h_y = (float*) malloc(N * sizeof(float));
-
-for (int i = 0; i < N; ++i){
-    h_x[i] = (float)i;
-    h_y[i] = (float)i;
-//    printf("%2.0f ", h_x[i]);
-}
-printf("\n");
-
-// Set up device data
-float* d_x;
-float* d_y;
-
-cudaMalloc((void**) &d_x, N * sizeof(float));
-cudaMalloc((void**) &d_y, N * sizeof(float));
-cudaCheckErrors("cudaMalloc failed");
-
-cudaMemcpy(d_x, h_x, N, cudaMemcpyHostToDevice);
-cudaMemcpy(d_y, h_y, N, cudaMemcpyHostToDevice);
-cudaCheckErrors("cudaMalloc failed");
-
-// Set up graph
-bool graphCreated=false;
-cudaGraph_t graph;
-cudaGraphExec_t instance;
-
-// FIXME
-cudaGraphCreate(FIXME, 0);
-
-int threads = 512;
-int blocks = (N + (threads - 1) / threads);
-
-// Launching work
-for (int i = 0; i < 100; ++i){
-    if (graphCreated == false){
-    // If first pass, starting stream capture
-        cudaStreamBeginCapture(streams[0], cudaStreamCaptureModeGlobal);
-        cudaCheckErrors("Stream begin capture failed");
-
+    // Timing without graph
+    auto t1 = high_resolution_clock::now();
+    for (int i = 0; i < 1000; ++i) {
         kernel_a<<<blocks, threads, 0, streams[0]>>>(d_x, d_y);
         cudaCheckErrors("Kernel a failed");
 
         cudaEventRecord(event1, streams[0]);
-        cudaCheckErrors("Event record failed");
+        cudaCheckErrors("Event1 record failed");
 
+        cudaStreamWaitEvent(streams[0], event1);
         kernel_b<<<blocks, threads, 0, streams[0]>>>(d_x, d_y);
         cudaCheckErrors("Kernel b failed");
 
         cudaStreamWaitEvent(streams[1], event1);
-        cudaCheckErrors("Event wait failed");
-
         kernel_c<<<blocks, threads, 0, streams[1]>>>(d_x, d_y);
         cudaCheckErrors("Kernel c failed");
 
+        cudaEventRecord(event2, streams[0]);
         cudaEventRecord(event2, streams[1]);
-        cudaCheckErrors("Event record failed");
+        cudaCheckErrors("Event2 record failed");
 
         cudaStreamWaitEvent(streams[0], event2);
-        cudaCheckErrors("Event wait failed");
-
+        cudaStreamWaitEvent(streams[1], event2);
         kernel_d<<<blocks, threads, 0, streams[0]>>>(d_x, d_y);
         cudaCheckErrors("Kernel d failed");
+    }
+
+    cudaDeviceSynchronize();
+    auto t2 = high_resolution_clock::now();
+    duration<double> no_graph_time = duration_cast<duration<double>>(t2 - t1);
+    std::cout << "No Graph Time: " << no_graph_time.count() << " s" << std::endl;
+
+    cudaMemcpy(out_y, d_y, N * sizeof(float), cudaMemcpyDeviceToHost);
+    cudaCheckErrors("Memcpy from device to host failed");
+
+    std::cout << "First 10 elements of out_y (no graph):" << std::endl;
+    for (int i = 0; i < 10; ++i) {
+        std::cout << out_y[i] << " ";
+    }
+    std::cout << std::endl;
+
+    // Reset d_y before graph execution
+    cudaMemcpy(d_y, h_y, N * sizeof(float), cudaMemcpyHostToDevice);
+    cudaCheckErrors("Reset d_y before graph execution failed");
+
+    // Create the graph for the first execution
+    t1 = high_resolution_clock::now();
+    if (!graphCreated) {
+        cudaStreamBeginCapture(streams[0], cudaStreamCaptureModeGlobal);
+        cudaCheckErrors("Stream begin capture failed");
+
+        kernel_a<<<blocks, threads, 0, streams[0]>>>(d_x, d_y);
+        cudaCheckErrors("Kernel a during capture failed");
+
+        cudaEventRecord(event1, streams[0]);
+        cudaCheckErrors("Event1 record failed");
+
+        kernel_b<<<blocks, threads, 0, streams[0]>>>(d_x, d_y);
+        cudaCheckErrors("Kernel b during capture failed");
+
+        cudaStreamWaitEvent(streams[1], event1);
+        cudaCheckErrors("Stream wait for event1 failed");
+
+        kernel_c<<<blocks, threads, 0, streams[1]>>>(d_x, d_y);
+        cudaCheckErrors("Kernel c during capture failed");
+
+        cudaEventRecord(event2, streams[1]);
+        cudaCheckErrors("Event2 record failed");
+
+        cudaStreamWaitEvent(streams[0], event2);
+        cudaCheckErrors("Stream wait for event2 failed");
+
+        kernel_d<<<blocks, threads, 0, streams[0]>>>(d_x, d_y);
+        cudaCheckErrors("Kernel d during capture failed");
 
         cudaStreamEndCapture(streams[0], &graph);
         cudaCheckErrors("Stream end capture failed");
 
-        // Creating the graph instance
-        // FIXME
-        cudaGraphInstantiate(FIXME, graph, NULL, NULL, 0);
-        cudaCheckErrors("instantiating graph failed");
+        cudaGraphInstantiate(&instance, graph, NULL, NULL, 0);
+        cudaCheckErrors("Graph instantiation failed");
 
-        // FIXME
-        graphCreated = FIXME;
+        graphCreated = true;
     }
-// Launch the graph instance
-// FIXME
-cudaGraphLaunch(FIXME, streams[0]);
-cudaCheckErrors("Launching graph failed");
-cudaStreamSynchronize(streams[0]);
-}
 
-// Count how many nodes we had
-cudaGraphNode_t *nodes = NULL;
-size_t numNodes = 0;
-cudaGraphGetNodes(graph, nodes, &numNodes);
-cudaCheckErrors("Graph get nodes failed");
-printf("Number of the nodes in the graph = %zu\n", numNodes);
+    // Timing with graph
+    t1 = high_resolution_clock::now();
+    for (int i = 0; i < 1000; ++i){
+        cudaGraphLaunch(instance, streams[0]);
+        cudaCheckErrors("Graph launch failed");
+    }
+    cudaDeviceSynchronize();
+    t2 = high_resolution_clock::now();
+    duration<double> graph_time = duration_cast<duration<double>>(t2 - t1);
+    std::cout << "Graph Execution Time: " << graph_time.count() << " s" << std::endl;
+    
+    cudaMemcpy(out_y, d_y, N * sizeof(float), cudaMemcpyDeviceToHost);
+    cudaCheckErrors("Finishing memcpy failed");
 
-// Below is for timing
-cudaDeviceSynchronize();
+    std::cout << "First 10 elements of out_y (with graph):" << std::endl;
+    for (int i = 0; i < 10; ++i) {
+        std::cout << out_y[i] << " ";
+    }
+    std::cout << std::endl;
 
-using namespace std::chrono;
+    // Cleanup
+    cudaGraphDestroy(graph);
+    cudaFree(d_x);
+    cudaFree(d_y);
+    for (int i = 0; i < num_streams; ++i){
+        cudaStreamDestroy(streams[i]);
+    }
+    free(h_x);
+    free(h_y);
+    free(out_y);
 
-high_resolution_clock::time_point t1 = high_resolution_clock::now();
-
-for (int i = 0; i < 1000; ++i){
-cudaGraphLaunch(instance, streams[0]);
-cudaCheckErrors("Launching graph failed");
-}
-
-cudaDeviceSynchronize();
-high_resolution_clock::time_point t2 = high_resolution_clock::now();
-
-duration<double> total_time = duration_cast<duration<double>>(t2 - t1);
-
-std::cout << "Time " << total_time.count() << " s" << std::endl;
-
-// Copy data back to host
-cudaMemcpy(h_y, d_y, N, cudaMemcpyDeviceToHost);
-cudaCheckErrors("Finishing memcpy failed");
-
-cudaDeviceSynchronize();
-
-// Print out the first 25 values of h_y
-for (int i = 0; i < 25; ++i){
-    printf("%2.0f ", h_y[i]);
-}
-printf("\n");
-
-return 0;
+    return 0;
 }
